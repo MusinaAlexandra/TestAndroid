@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
@@ -22,37 +24,42 @@ public class APIactivity extends AppCompatActivity {
 
     DadApi dadAPI;
     TextView textView;
-    LokeData jokeData;
+    JokeData jokeData = new JokeData();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_api);
         textView =findViewById(R.id.textView);
-        String baseUrl = "https://jsonparsingdemo-cec5b.firebaseapp.com";
-        new  ParseTask().execute(baseUrl);
+        String baseUrl = "https://icanhazdadjoke.com";
+        new  ParseTask().execute();
     }
 
     @SuppressLint("StaticFieldLeak")
     private  class ParseTask extends AsyncTask {
-        String baseUrl = "https://jsonparsingdemo-cec5b.firebaseapp.com";
+        String baseUrl = "https://icanhazdadjoke.com";
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        Retrofit.Builder builder = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(baseUrl);
+                .baseUrl(baseUrl)
+                .build();
+        public DadApi joke_response = retrofit.create(DadApi.class);
 
         @Override
         protected JokeData doInBackground(Object[] objects) {
             // rest api call
             try {
-                Response<JSONObject> response = getApiJoke().getJoke().execute();
+                Log.e("@@@", joke_response.getJoke().request().url().toString());
+                Log.e("@@@", joke_response.getJoke().request().headers().toString());
+                Log.e("@@@", joke_response.getJoke().request().method());
+                Response<JsonObject> response = joke_response.getJoke().execute();
                 if(response.isSuccessful() && response.code() == 200){
                     Log.e("@@@" , "code " + response.code());
                     Log.e("@@@" , "code " + response.body());
                     JSONObject parentJson = new JSONObject(String.valueOf(response.body()));
                     Gson gson = new Gson();
                     JSONObject json = new JSONObject(String.valueOf(response.body()));
-                    JokeData jData = gson.fromJson(json.toString(),JokeData.class);
-                    return jData;
+                    jokeData.setJoke(json.getString("joke"));
+                    return jokeData;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -67,8 +74,8 @@ public class APIactivity extends AppCompatActivity {
             httpClient.interceptors().clear();
             httpClient.readTimeout(10, TimeUnit.SECONDS)
                     .connectTimeout(10,TimeUnit.SECONDS);
-            builder.client(httpClient.build());
-            Retrofit retrofit = builder.build();
+           // builder.client(httpClient.build());
+            //Retrofit retrofit = builder.build();
             return retrofit.create(servce);
         }
         private DadApi getApiJoke(){

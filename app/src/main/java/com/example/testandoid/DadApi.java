@@ -1,5 +1,7 @@
 package com.example.testandoid;
 
+import com.google.gson.JsonObject;
+
 import org.json.JSONObject;
 
 import retrofit2.Call;
@@ -7,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
 public interface  DadApi {
-    @GET("https://icanhazdadjoke.com/")
+    @GET("/")
     @Headers("Accept: application/json")
-    Call<JSONObject> getJoke();
+    Call<JsonObject> getJoke();
 }
