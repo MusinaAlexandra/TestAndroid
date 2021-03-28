@@ -8,6 +8,6 @@ import retrofit2.http.Headers;
 
 public interface  DadApi {
     @GET("https://icanhazdadjoke.com/")
-    @Headers("Accept-application/json")
+    @Headers("Accept: application/json")
     Call<JSONObject> getJoke();
 }
