@@ -3,16 +3,16 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="1"
-        android:icon="@drawable/ic_help"
-        android:title="Настройки" />
+        // android:icon="@drawable/ic_help"
+        android:title="Шутка" />
     <item
         android:id="@+id/logout_settings"
         android:orderInCategory="3"
-        android:icon="@drawable/ic_help"
-        android:title="Сохранить" />
+        // android:icon="@drawable/ic_help"
+        android:title="Выйти" />
     <item
         android:id="@+id/nothing_settings"
         android:orderInCategory="2"
-        android:icon="@drawable/ic_help"
-        android:title="Открыть" />
+        // android:icon="@drawable/ic_help"
+        android:title="Ничего" />
 </menu>
