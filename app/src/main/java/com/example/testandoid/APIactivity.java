@@ -21,10 +21,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIactivity extends AppCompatActivity {
 
     DadApi dadAPI;
+    TextView textView;
+    LokeData jokeData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_api);
+        textView =findViewById(R.id.textView);
         String baseUrl = "https://jsonparsingdemo-cec5b.firebaseapp.com";
         new  ParseTask().execute(baseUrl);
     }
@@ -56,7 +59,10 @@ public class APIactivity extends AppCompatActivity {
             }
             return null;
         }
-
+        @Override
+        protected void onPostExecute(Object o) {
+            textView.setText(jokeData.getJoke());
+        }
         public  <S> S createService(Class<S> servce){
             httpClient.interceptors().clear();
             httpClient.readTimeout(10, TimeUnit.SECONDS)
