@@ -48,16 +48,16 @@ public class MessageActivity extends AppCompatActivity {
         switch(id){
             case R.id.action_settings :
                 // go to jokeAPI
-                Intent intent = new Intent(this, APIactivity.class);
-                startActivity(intent);
+                Intent intent3 = new Intent(this, APIactivity.class);
+                startActivity(intent3);
                 return true;
             case R.id.nothing_settings:
                 headerView.setText("Nothing");
                 return true;
             case R.id.logout_settings:
                 // go to main activity
-                Intent intent = new Intent(this,  MainActivity.class);
-                startActivity(intent);
+                Intent intent2 = new Intent(this,  MainActivity.class);
+                startActivity(intent2);
                 return true;
         }
         //headerView.setText(item.getTitle());
